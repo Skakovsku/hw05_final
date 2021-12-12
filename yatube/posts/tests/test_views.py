@@ -184,17 +184,6 @@ class PostPagesTests(TestCase):
             'Тестовый текст',
         )
 
-    def test_subscription_login_user(self):
-        """Проверка возможности подписки авторизованным и
-        неавторизованным пользователями.
-        """
-        self.guest_client.get(const.PROFILE_FOLLOW)
-        self.assertFalse(Follow.objects.filter(user=self.user).exists())
-        self.authorized_client.get(const.PROFILE_FOLLOW)
-        self.assertTrue(Follow.objects.filter(user=self.user).exists())
-        self.author_client.get(const.PROFILE_FOLLOW)
-        self.assertFalse(Follow.objects.filter(user=self.post.author).exists())
-
     def test_show_new_post_in_posts_lines(self):
         """Проверка отображения нового поста в лентах подписанных и
         неподписанных пользователей.
@@ -217,3 +206,15 @@ class PostPagesTests(TestCase):
             listing_address,
             'Пост не отображается',
         )
+
+    def test_subscription_login_user(self):
+        """Проверка возможности подписки авторизованным и
+        неавторизованным пользователями.
+        """
+        self.guest_client.get(const.PROFILE_FOLLOW)
+        self.assertFalse(Follow.objects.filter(user=self.user).exists())
+        self.author_client.get(const.PROFILE_FOLLOW)
+        self.assertTrue(Follow.objects.filter(user=self.post.author).exists())
+        follow_count = Follow.objects.all().count()
+        self.authorized_client.get(const.PROFILE_FOLLOW)
+        self.assertEqual(Follow.objects.all().count(), follow_count)

@@ -66,10 +66,7 @@ def post_detail(request, post_id):
     author_name = post_object.author
     post_count_auth = Post.objects.filter(author=author_name).count()
     comments_post = Comment.objects.filter(post=post_object)
-    if request.user.is_authenticated:
-        form = CommentForm(request.POST or None)
-    else:
-        form = None
+    form = CommentForm(request.POST or None)
     context = {
         'form': form,
         'comments': comments_post,
@@ -162,6 +159,10 @@ def follow_index(request):
 @login_required
 def profile_follow(request, username):
     author = User.objects.get(username=username)
+    fol_list = Follow.objects.filter(user=request.user)
+    for i in fol_list:
+        if i.author == author:
+            return redirect('posts:profile', username=username)
     if request.user == author:
         return redirect('posts:profile', username=username)
     Follow.objects.create(user=request.user, author=author)
