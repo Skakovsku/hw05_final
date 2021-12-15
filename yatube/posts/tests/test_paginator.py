@@ -7,8 +7,9 @@ from posts.models import Group, Post, User
 
 class PaginatorViewsTest(TestCase):
     def setUp(self):
-        self.guest_client = Client()
         self.user = User.objects.create_user(username=const.USERNAME_AUTH)
+        self.user_reg = User.objects.create_user(username=const.PROFILE_REG)
+        self.guest_client = Client(self.user_reg)
         self.group = Group.objects.create(
             title=const.GROUP_TITLE,
             slug=const.SLUG,

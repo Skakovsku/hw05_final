@@ -67,6 +67,12 @@ class Comment(models.Model):
         auto_now_add=True
     )
 
+    class Meta:
+        verbose_name = 'Comment'
+
+    def __str__(self):
+        return self.text[:15]
+
 
 class Follow(models.Model):
     user = models.ForeignKey(
@@ -79,3 +85,16 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following',
     )
+
+    class Meta:
+        verbose_name = 'Follow'
+
+    def create_follow(self):
+        follow_obj = Follow.objects.filter(user=self.user, author=self.author)
+        if self.user == self.author:
+            raise ValueError('Нельзя подписаться на самого себя')
+        elif follow_obj is True:
+            raise ValueError('Вы уже подписаны на этого автора')
+
+    def __str__(self):
+        return f'Подписка {self.user} на {self.author}'

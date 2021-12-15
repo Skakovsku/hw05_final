@@ -10,6 +10,7 @@ TEXT = 'Тестовый пост 15 символов'
 USERNAME_AUTH = 'auth'
 USERNAME_REG = 'Tester'
 USERNAME_REG_FOLLOW = 'Tester follow'
+TEST_COMMENT = 'Тестовый комментарий'
 
 INDEX_URL = reverse('posts:index')
 GROUP_POSTS_URL = reverse('posts:group_posts', kwargs={'slug': SLUG})
@@ -32,6 +33,12 @@ POST_CREATE_TEMPLATE = 'posts/create_post.html'
 PROFILE_TEMPLATE = 'posts/profile.html'
 POST_DETAIL_TEMPLATE = 'posts/post_detail.html'
 POST_EDIT_TEMPLATE = 'posts/create_post.html'
+
+SIGNUP_TEMPLATE = 'users/signup.html'
+LOGIN_TEMPLATE = 'users/login.html'
+LOGOUT_TEMPLATE = 'users/logged_out.html'
+PASS_CHANGE_DONE_TEMPLATE = 'users/password_change_done.html'
+PASS_CHANGE_TEMPLATE = 'users/password_change.html'
 
 TEMP_MEDIA_ROOT = tempfile.mkdtemp(dir=settings.BASE_DIR)
 

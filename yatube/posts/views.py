@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_page
 
 from .forms import CommentForm, PostForm
-from .models import Comment, Follow, Group, Post, User
+from .models import Follow, Group, Post, User
 
 
 @cache_page(20)
@@ -42,10 +42,14 @@ def group_posts(request, slug):
 def profile(request, username):
     template = 'posts/profile.html'
     profile_context = User.objects.get(username=username)
-    user_id = User.objects.get(username=username).id
+    user_id = profile_context.id
     post_list = Post.objects.filter(author=user_id)
     following = False
-    if Follow.objects.filter(author=profile_context):
+    follow_obj = Follow.objects.filter(
+        user_id=request.user.id,
+        author=profile_context,
+    )
+    if follow_obj:
         following = True
     paginator = Paginator(post_list, settings.COUNT_POSTS_PAGES)
     page_number = request.GET.get('page')
@@ -65,11 +69,9 @@ def post_detail(request, post_id):
     post_object = Post.objects.get(pk=post_id)
     author_name = post_object.author
     post_count_auth = Post.objects.filter(author=author_name).count()
-    comments_post = Comment.objects.filter(post=post_object)
     form = CommentForm(request.POST or None)
     context = {
         'form': form,
-        'comments': comments_post,
         'post_object': post_object,
         'author_name': author_name,
         'post_count_auth': post_count_auth,

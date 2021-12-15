@@ -1,10 +1,11 @@
 import re
 import tempfile
 
-import pytest
 from django.contrib.auth import get_user_model
 from django.core.paginator import Page, Paginator
 from django.db.models import fields
+
+import pytest
 
 try:
     from posts.models import Post

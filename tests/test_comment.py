@@ -1,8 +1,9 @@
 import re
 
-import pytest
 from django.contrib.auth import get_user_model
 from django.db.models import fields
+
+import pytest
 
 try:
     from posts.models import Comment

@@ -59,6 +59,7 @@
           </div>
         </div>
       {% endif %}
+      {% with post_object.comment.all as comments %}
       {% for comment in comments %}
         <div class="media mb-4">
           <div class="media-body">
@@ -73,6 +74,8 @@
           </div>
         </div>
       {% endfor %}
+      {% endwith %}
+
     </article>
   </div> 
 {% endblock %}
