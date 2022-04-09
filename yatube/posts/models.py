@@ -68,6 +68,7 @@ class Comment(models.Model):
     )
 
     class Meta:
+        ordering = ('-created',)
         verbose_name = 'Comment'
 
     def __str__(self):
