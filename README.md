@@ -29,6 +29,13 @@ python3 -m venv env
 ```
 source venv/bin/activate
 ```
+
+Установить зависимости из файла requirements.txt:
+
+```
+pip install -r requirements.txt
+```
+
 Далее необходимо сгенерировать секретный ключ Django. Для этого при активированном виртуальном окружении в терминале введите следующую команду:
 
 ```
@@ -39,12 +46,6 @@ source venv/bin/activate
 SECRET_KEY=сгенерированный_ключ
 ```
 Информацию следует печатать без кавычек, скобок и пробелов.
-
-Установить зависимости из файла requirements.txt:
-
-```
-pip install -r requirements.txt
-```
 
 Выполнить миграции:
 
